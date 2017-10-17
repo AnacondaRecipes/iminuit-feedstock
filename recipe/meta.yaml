@@ -30,6 +30,7 @@ test:
   imports:
     - iminuit
     - iminuit.frontends
+    - iminuit._libiminuit
 
 about:
   home: https://github.com/iminuit/iminuit
