@@ -14,12 +14,17 @@ source:
 
 build:
   number: 0
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  script:
+    # So Cython regenerates it:
+    - rm -rf iminuit/_libiminuit.cpp  # [unix]
+    - del /s /q iminuit\_libiminuit.cpp  # [win]
+    - python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
   host:
     - python
     - setuptools
+    - cython
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
