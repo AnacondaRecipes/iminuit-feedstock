@@ -14,7 +14,11 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  script:
+    # So Cython regenerates it:
+    - rm -rf iminuit/_libiminuit.cpp  # [unix]
+    - del /s /q iminuit\_libiminuit.cpp  # [win]
+    - python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
   build:
@@ -22,7 +26,8 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - python
-    - pip
+    - setuptools
+    - cython
     - numpy
   run:
     - python
