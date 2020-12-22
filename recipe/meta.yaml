@@ -6,35 +6,44 @@ package:
   version: '{{ version }}'
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+- url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 4fc1ca269c98aa68532b993738512713d3cf4c7f6fd25e2084cb62fb28b75b90
+- git_url: https://github.com/scikit-hep/iminuit.git
+  git_rev:  v2.2.0
+  folder: for_tests
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  script:
+    - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}
+    - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - cmake
+    - make  # [unix]
   host:
     - python
     - pip
-    - numpy
-    - cython
   run:
     - python
     - {{ pin_compatible('numpy') }}
 
 test:
+  source_files:
+    - for_tests/tests
   requires:
     - pytest
+  imports:
+    - iminuit
   commands:
-    - python -c "import iminuit, sys; sys.exit(iminuit.test())"
+    - python -m pytest for_tests/tests
 
 about:
   home: https://github.com/scikit-hep/iminuit
-  license: LGPL v2
+  license: LGPL-2.0-or-later
   license_family: LGPL
   license_file: LICENSE
   summary: Interactive Minimization Tools based on MINUIT
@@ -47,14 +56,13 @@ about:
     Minuit. iminuit is mostly compatible with PyMinuit (with few exceptions).
     Existing PyMinuit code can be ported to iminuit by just changing the
     import statement.
-  doc_url:  http://iminuit.readthedocs.io
+  doc_url: http://iminuit.readthedocs.io
   dev_url: https://github.com/scikit-hep/iminuit
 
 extra:
   recipe-maintainers:
     - mwcraig
     - bsipocz
-    - cdeil
     - piti118
     - HDembinski
     - beckermr
