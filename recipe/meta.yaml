@@ -1,5 +1,5 @@
 {% set name = "iminuit" %}
-{% set version = "2.2.0" %}
+{% set version = "2.4.0" %}
 
 package:
   name: '{{ name|lower }}'
@@ -7,7 +7,7 @@ package:
 
 source:
 - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4fc1ca269c98aa68532b993738512713d3cf4c7f6fd25e2084cb62fb28b75b90
+  sha256: 350c13d33f3ec5884335aea1cc11a17ae49dd8e6b2181c3f1b3c9c27e2e0b228
 - git_url: https://github.com/scikit-hep/iminuit.git
   git_rev:  v2.2.0
   folder: for_tests
