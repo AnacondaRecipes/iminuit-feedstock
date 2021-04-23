@@ -2,24 +2,22 @@
 {% set version = "2.4.0" %}
 
 package:
-  name: '{{ name|lower }}'
-  version: '{{ version }}'
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-- url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 350c13d33f3ec5884335aea1cc11a17ae49dd8e6b2181c3f1b3c9c27e2e0b228
-- git_url: https://github.com/scikit-hep/iminuit.git
-  git_rev:  v2.2.0
-  folder: for_tests
 
 build:
   number: 0
   script:
     - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}
-    - "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv"
+    - {{ PYTHON }} -m pip install . -vvv
 
 requirements:
   build:
+    - python                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
@@ -33,13 +31,15 @@ requirements:
 
 test:
   source_files:
-    - for_tests/tests
+    - tests
   requires:
     - pytest
+    - pip
   imports:
     - iminuit
   commands:
-    - python -m pytest for_tests/tests
+    - python -m pytest tests
+    - pip check
 
 about:
   home: https://github.com/scikit-hep/iminuit
@@ -65,6 +65,5 @@ extra:
     - bsipocz
     - piti118
     - HDembinski
-    - beckermr
     - chrisburr
     - henryiii
