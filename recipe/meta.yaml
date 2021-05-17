@@ -17,14 +17,16 @@ build:
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
+    - python >=3.6                   # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
     - make  # [unix]
   host:
-    - python
+    - python >=3.6
     - pip
+    # use cibuildwheels to make wheels (#512) https://github.com/scikit-hep/iminuit/pull/512
+    - numpy
   run:
     - python
     - {{ pin_compatible('numpy') }}
