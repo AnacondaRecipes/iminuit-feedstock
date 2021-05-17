@@ -25,10 +25,9 @@ requirements:
   host:
     - python >=3.6
     - pip
-    # use cibuildwheels to make wheels (#512) https://github.com/scikit-hep/iminuit/pull/512
-    - numpy
   run:
     - python >=3.6
+    # use cibuildwheels to make wheels (#512) https://github.com/scikit-hep/iminuit/pull/512
     - {{ pin_compatible('numpy') }}
 
 test:
