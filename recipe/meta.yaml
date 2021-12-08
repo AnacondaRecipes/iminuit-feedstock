@@ -11,23 +11,25 @@ source:
 
 build:
   number: 0
+  # This package doesn't included in the SOW Packages on s390x
+  skip: True  # [s390x]
+  skip: True  # [py<36]
   script:
     - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}
     - {{ PYTHON }} -m pip install . -vvv
 
 requirements:
   build:
-    - python                   # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
     - make  # [unix]
   host:
-    - python >=3.6
+    - python
     - pip
     - setuptools >=42
     - wheel
-    - {{ pin_compatible('numpy') }}
+    - numpy
   run:
     - python >=3.6
     # use cibuildwheels to make wheels (#512) https://github.com/scikit-hep/iminuit/pull/512
