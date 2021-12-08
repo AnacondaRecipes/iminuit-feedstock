@@ -31,7 +31,7 @@ requirements:
     - wheel
     - numpy
   run:
-    - python >=3.6
+    - python
     # use cibuildwheels to make wheels (#512) https://github.com/scikit-hep/iminuit/pull/512
     - {{ pin_compatible('numpy') }}
 
