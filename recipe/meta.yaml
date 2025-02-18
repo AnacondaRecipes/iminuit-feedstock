@@ -11,8 +11,6 @@ source:
 
 build:
   number: 0
-  # This package doesn't included in the SOW Packages on s390x
-  skip: True  # [s390x]
   script:
     - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}
     - {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation
@@ -29,7 +27,7 @@ requirements:
     - setuptools
     - wheel
     - numpy
-    - pybind11>=2.12
+    - pybind11 >=2.12
     - scikit-build-core
   run:
     - python
