@@ -16,6 +16,8 @@ build:
     - set CMAKE_BUILD_PARALLEL_LEVEL=%CPU_COUNT%      # [win]
     - set CMAKE_GENERATOR=Ninja                       # [win]
     - {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation
+  missing_dso_whitelist:  # [s390x]
+    - $RPATH/ld64.so.1  # [s390x]
 
 requirements:
   build:
