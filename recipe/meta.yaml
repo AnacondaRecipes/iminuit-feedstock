@@ -31,7 +31,8 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - numpy
+    - numpy 2.0 # [py<313]
+    - numpy 2.1 # [py==313]
     - pybind11 >=2.12
     - scikit-build-core
   run:
