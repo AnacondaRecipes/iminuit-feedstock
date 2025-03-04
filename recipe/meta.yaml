@@ -1,5 +1,5 @@
 {% set name = "iminuit" %}
-{% set version = "2.18.0" %}
+{% set version = "2.30.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,16 +7,17 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7ee2c6a0bcdac581b38fae8d0f343fdee55f91f1f6a6cc9643fcfbcc6c2dc3e6
+  sha256: 2815bfdeb8e7f78185f316b75e2d4b19d0f6993bdc5ff03352ed37b70a796360
 
 build:
   number: 0
-  # This package doesn't included in the SOW Packages on s390x
-  skip: True  # [s390x]
-  skip: True  # [py<37]
   script:
-    - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}
-    - {{ PYTHON }} -m pip install . -vvv --no-deps
+    - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}  # [unix]
+    - set CMAKE_BUILD_PARALLEL_LEVEL=%CPU_COUNT%      # [win]
+    - set CMAKE_GENERATOR=Ninja                       # [win]
+    - {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation
+  missing_dso_whitelist:  # [s390x]
+    - $RPATH/ld64.so.1  # [s390x]
 
 requirements:
   build:
@@ -24,16 +25,19 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - make  # [unix]
+    - ninja-base  # [win]
   host:
     - python
     - pip
-    - setuptools >=42
+    - setuptools
     - wheel
-    - numpy
+    - numpy 2.0 # [py<313]
+    - numpy 2.1 # [py==313]
+    - pybind11 >=2.12
+    - scikit-build-core
   run:
     - python
-    # use cibuildwheels to make wheels (#512) https://github.com/scikit-hep/iminuit/pull/512
-    - {{ pin_compatible('numpy') }}
+    - numpy >=1.21
 
 test:
   source_files:
