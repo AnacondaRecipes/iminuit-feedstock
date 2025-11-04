@@ -15,6 +15,7 @@ build:
     - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}  # [unix]
     - set CMAKE_BUILD_PARALLEL_LEVEL=%CPU_COUNT%      # [win]
     - set CMAKE_GENERATOR=Ninja                       # [win]
+    - set CMAKE_CXX_COMPILER=%CXX%                    # [win]
     - {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation
   skip: true  # [py<39]
 
@@ -54,7 +55,7 @@ test:
 about:
   home: https://github.com/scikit-hep/iminuit
   license: LGPL-2.1-or-later AND MIT
-  license_family: LGPL
+  license_family: Other
   license_file: LICENSE
   summary: Interactive Minimization Tools based on MINUIT
   description: |
