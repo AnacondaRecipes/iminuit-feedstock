@@ -14,7 +14,6 @@ build:
   script:
     - export CMAKE_BUILD_PARALLEL_LEVEL=${CPU_COUNT}  # [unix]
     - set CMAKE_BUILD_PARALLEL_LEVEL=%CPU_COUNT%      # [win]
-    - set CMAKE_GENERATOR=NMake Makefiles             # [win]
     - {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation
   skip: true  # [py<39]
 
