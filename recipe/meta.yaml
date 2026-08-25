@@ -1,13 +1,13 @@
 {% set name = "iminuit" %}
-{% set version = "2.31.3" %}
+{% set version = "2.32.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ffb3aeb2de26c400d0aff7e2b7457f64cd609a494c45ee579effee81b1bc5d78
+  sha256: a32b34d18665959be75ad6bdb1dd80459bb94466c62b455631c00568accdf7d2
 
 build:
   number: 0
@@ -30,8 +30,7 @@ requirements:
     - setuptools
     - wheel
     - numpy {{ numpy }}
-    # pybind11 >=3 is not in the main channel
-    - pybind11 >=2.13.6
+    - pybind11 >=3.0
     - scikit-build-core >=0.11
   run:
     - python
